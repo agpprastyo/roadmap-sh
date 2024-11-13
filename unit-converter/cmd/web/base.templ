@@ -1,0 +1,64 @@
+package web
+
+templ Base(convertType string) {
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <title>Unit Converter Agprastyo</title>
+            <link href="assets/css/output.css" rel="stylesheet"/>
+            <script src="assets/js/htmx.min.js"></script>
+
+        </head>
+        <body class="min-h-screen flex flex-col">
+            <div class="flex-grow">
+                <nav class="bg-gray-800 p-4">
+                    <div class="container mx-auto flex justify-between items-center">
+                        <a href="/" class="text-white font-bold text-lg">Unit Converter</a>
+                        <div>
+                            if convertType == "length" {
+                                <a href="/?converter=length" class="text-white underline mr-4">Length</a>
+                            } else {
+                                <a href="/?converter=length" class="text-gray-400 hover:text-white mr-4">Length</a>
+                            }
+                            if convertType == "weight" {
+                                <a href="/?converter=weight" class="text-white underline mr-4">Weight</a>
+                            } else {
+                                <a href="/?converter=weight" class="text-gray-400 hover:text-white mr-4">Weight</a>
+                            }
+                            if convertType == "temperature" {
+                                <a href="/?converter=temperature" class="text-white underline">Temperature</a>
+                            } else {
+                                <a href="/?converter=temperature" class="text-gray-400 hover:text-white">Temperature</a>
+                            }
+                        </div>
+                    </div>
+                </nav>
+                <main>
+                    @content(convertType)
+                </main>
+            </div>
+            <footer class="bg-gray-800 text-gray-400 py-4 mt-8">
+                <div class="container mx-auto text-center">
+                    &copy; 2024 Unit Converter. All rights reserved.
+                </div>
+            </footer>
+        </body>
+        <script src="assets/js/index.js"></script>
+    </html>
+}
+
+templ content(convertType string) {
+    if convertType == "" {
+        <div class="container mx-auto my-8">
+            <h1 class="text-3xl font-bold mb-4">Unit Converter</h1>
+            <p class="text-gray-700">Please select a converter from the navigation menu above.</p>
+        </div>
+    } else if convertType == "length" {
+        @Length()
+    } else if convertType == "weight" {
+        @Weight()
+    } else if convertType == "temperature" {
+        @Temperature()
+    }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteTargetsManager">
+    <option name="projectDefaultTargetUuid" value="bbae4cb3-4d23-4241-b8a9-7450bc7db6be" />
+    <targets>
+      <target name="WSL - Ubuntu" type="wsl" uuid="bbae4cb3-4d23-4241-b8a9-7450bc7db6be">
+        <config>
+          <option name="distributionMsId" value="Ubuntu" />
+          <option name="projectRootOnTarget" value="{exitCode=0, timeout=false, cancelled=false, stdout=/tmp/tmp.YouRxGTQQC&#10;, stderr=}/number-guessing-game" />
+        </config>
+        <ContributedStateBase type="GoLanguageRuntime">
+          <config>
+            <option name="goPath" value="/home/agpwsl/sdk/gopath" />
+            <option name="goRoot" value="/home/agpwsl/sdk/go1.22.6/bin/go" />
+          </config>
+        </ContributedStateBase>
+      </target>
+    </targets>
+  </component>
+</project>
