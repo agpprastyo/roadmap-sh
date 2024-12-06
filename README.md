@@ -17,3 +17,5 @@ This repository contains projects submission for [Roadmap.sh](https://roadmap.sh
 
 5. [Unit Converter](./unit-converter) - A simple CLI application to convert units.
    Project submission for [Unit Converter](https://roadmap.sh/projects/unit-converter)
+6. [Personal Blog](./personal-blog) - A simple blog application.
+   Project submission for [Personal Blog](https://roadmap.sh/projects/personal-blog)
