@@ -1,46 +1,72 @@
 package main
 
 import (
-	"context"
+	"flag"
 	"fmt"
-	"log"
-	"net/http"
-	"os/signal"
-	"syscall"
-	"time"
+	"log/slog"
+	"os"
+	"personal-blog/internal/models"
+	"runtime/debug"
+	"sync"
 
-	"personal-blog/internal/server"
+	"personal-blog/internal/env"
+	"personal-blog/internal/version"
+
+	"github.com/lmittmann/tint"
 )
 
-func gracefulShutdown(apiServer *http.Server) {
-	// Create context that listens for the interrupt signal from the OS.
-	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
-	defer stop()
+func main() {
+	logger := slog.New(tint.NewHandler(os.Stdout, &tint.Options{Level: slog.LevelDebug}))
 
-	// Listen for the interrupt signal.
-	<-ctx.Done()
-
-	log.Println("shutting down gracefully, press Ctrl+C again to force")
-
-	// The context is used to inform the server it has 5 seconds to finish
-	// the request it is currently handling
-	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
-	defer cancel()
-	if err := apiServer.Shutdown(ctx); err != nil {
-		log.Printf("Server forced to shutdown with error: %v", err)
+	err := run(logger)
+	if err != nil {
+		trace := string(debug.Stack())
+		logger.Error(err.Error(), "trace", trace)
+		os.Exit(1)
 	}
-
-	log.Println("Server exiting")
 }
 
-func main() {
-
-	server := server.NewServer()
-
-	go gracefulShutdown(server)
-
-	err := server.ListenAndServe()
-	if err != nil && err != http.ErrServerClosed {
-		panic(fmt.Sprintf("http server error: %s", err))
+type config struct {
+	baseURL   string
+	httpPort  int
+	basicAuth struct {
+		username       string
+		hashedPassword string
 	}
+	cookie struct {
+		secretKey string
+	}
+}
+
+type application struct {
+	config       config
+	logger       *slog.Logger
+	wg           sync.WaitGroup
+	articleModel models.ArticleModel
+}
+
+func run(logger *slog.Logger) error {
+	var cfg config
+
+	cfg.baseURL = env.GetString("BASE_URL", "http://localhost:4444")
+	cfg.httpPort = env.GetInt("HTTP_PORT", 4444)
+	cfg.basicAuth.username = env.GetString("BASIC_AUTH_USERNAME", "admin")
+	cfg.basicAuth.hashedPassword = env.GetString("BASIC_AUTH_HASHED_PASSWORD", "$2a$12$A5VGgLlxr45NJ78Mqpz0vO2qGRSqtdKa78Jy9gpyExkI9FP07rLJW")
+	cfg.cookie.secretKey = env.GetString("COOKIE_SECRET_KEY", "j5vxnte2jrfmxgxx2irl7awqnsxzkhgn")
+
+	showVersion := flag.Bool("version", false, "display version and exit")
+
+	flag.Parse()
+
+	if *showVersion {
+		fmt.Printf("version: %s\n", version.Get())
+		return nil
+	}
+
+	app := &application{
+		config: cfg,
+		logger: logger,
+	}
+
+	return app.serveHTTP()
 }

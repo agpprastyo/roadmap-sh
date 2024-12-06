@@ -1,0 +1,245 @@
+[
+  {
+    "id": 8,
+    "title": "aaaa",
+    "content": "bbbbb",
+    "published": true,
+    "created_at": "2024-11-25T20:00:38.994642383+07:00",
+    "updated_at": "2024-12-05T11:08:45.48145054+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 9,
+    "title": "coba coba",
+    "content": "bbb",
+    "published": true,
+    "created_at": "2024-11-25T20:00:38.994642383+07:00",
+    "updated_at": "2024-12-05T11:08:46.037736696+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 10,
+    "title": "Coba Title coba1",
+    "content": "This article should  be published.",
+    "published": true,
+    "created_at": "2024-12-05T10:56:06.759762435+07:00",
+    "updated_at": "2024-12-05T14:50:32.215461083+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 11,
+    "title": "Coba Title",
+    "content": "This article should not be published.",
+    "published": false,
+    "created_at": "2024-12-05T10:56:26.214465555+07:00",
+    "updated_at": "2024-12-05T15:00:47.801647999+07:00",
+    "delete_at": "2024-12-05T15:00:52.485192458+07:00"
+  },
+  {
+    "id": 12,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": false,
+    "created_at": "2024-12-05T12:19:05.350243464+07:00",
+    "updated_at": "2024-12-05T14:09:19.86389023+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 13,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": false,
+    "created_at": "2024-12-05T12:19:05.593534815+07:00",
+    "updated_at": "2024-12-05T14:10:55.86612084+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 14,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": false,
+    "created_at": "2024-12-05T12:19:37.142891063+07:00",
+    "updated_at": "2024-12-05T14:10:56.569338958+07:00",
+    "delete_at": "2024-12-05T14:50:51.325036689+07:00"
+  },
+  {
+    "id": 15,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": false,
+    "created_at": "2024-12-05T12:19:38.726653698+07:00",
+    "updated_at": "2024-12-05T14:10:57.137378972+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 16,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": false,
+    "created_at": "2024-12-05T12:19:40.092797289+07:00",
+    "updated_at": "2024-12-05T14:10:57.726061075+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 17,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": false,
+    "created_at": "2024-12-05T12:19:41.828825378+07:00",
+    "updated_at": "2024-12-05T14:10:58.409891176+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 18,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": true,
+    "created_at": "2024-12-05T12:19:43.318390196+07:00",
+    "updated_at": "2024-12-06T15:20:01.313171424+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 19,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": true,
+    "created_at": "2024-12-05T12:19:44.647376405+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 20,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": false,
+    "created_at": "2024-12-05T12:19:45.909806224+07:00",
+    "updated_at": "2024-12-05T14:50:39.079105501+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 21,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": true,
+    "created_at": "2024-12-05T12:19:47.665855259+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 22,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": true,
+    "created_at": "2024-12-05T12:19:48.856823497+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 23,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": true,
+    "created_at": "2024-12-05T12:19:50.223917366+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 24,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": true,
+    "created_at": "2024-12-05T12:19:52.204098092+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 25,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": true,
+    "created_at": "2024-12-05T12:19:53.555407213+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 26,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": false,
+    "created_at": "2024-12-05T12:19:54.908162455+07:00",
+    "updated_at": "2024-12-05T14:09:19.138903423+07:00",
+    "delete_at": null
+  },
+  {
+    "id": 27,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": true,
+    "created_at": "2024-12-05T12:19:56.260916539+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 28,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": true,
+    "created_at": "2024-12-05T12:19:57.598927938+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 29,
+    "title": "Coba TitleTitle",
+    "content": "This article should not be published.",
+    "published": true,
+    "created_at": "2024-12-05T12:19:58.931130147+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 30,
+    "title": "coba",
+    "content": "nsflanssdgjkbhadsfgbha",
+    "published": true,
+    "created_at": "2024-12-05T12:58:14.077628573+07:00",
+    "updated_at": null,
+    "delete_at": "2024-12-05T14:39:32.236921465+07:00"
+  },
+  {
+    "id": 31,
+    "title": "cobagsdgsdgsdgs",
+    "content": "nsflanssdgjkbhadsfgbha",
+    "published": false,
+    "created_at": "2024-12-05T12:59:00.987795551+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 32,
+    "title": "fsdfsdfgsd",
+    "content": "vbxcbdfhdhdf",
+    "published": true,
+    "created_at": "2024-12-05T13:34:42.216442585+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 33,
+    "title": "adasfasfsdf",
+    "content": "sfasfasgsdgsd",
+    "published": true,
+    "created_at": "2024-12-05T13:40:36.899613927+07:00",
+    "updated_at": null,
+    "delete_at": null
+  },
+  {
+    "id": 34,
+    "title": "article 1",
+    "content": "coba",
+    "published": true,
+    "created_at": "2024-12-05T14:25:10.807087281+07:00",
+    "updated_at": null,
+    "delete_at": "2024-12-05T14:25:35.117331255+07:00"
+  }
+]

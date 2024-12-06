@@ -1,102 +1,65 @@
-MIGRATE = migrate
-MIGRATE_DIR = migrations
-DB_URL=postgres://${DB_USERNAME}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_DATABASE}?sslmode=disable
+# ==================================================================================== #
+# HELPERS
+# ==================================================================================== #
+
+## help: print this help message
+.PHONY: help
+help:
+	@echo 'Usage:'
+	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
 
 
+# ==================================================================================== #
+# QUALITY CONTROL
+# ==================================================================================== #
 
-include .env
-export $(shell sed 's/=.*//' .env)
+## audit: run quality control checks
+.PHONY: audit
+audit: test
+	go mod tidy -diff
+	go mod verify
+	test -z "$(shell gofmt -l .)" 
+	go vet ./...
+	go run honnef.co/go/tools/cmd/staticcheck@latest -checks=all,-ST1000,-U1000 ./...
+	go run golang.org/x/vuln/cmd/govulncheck@latest ./...
 
-# Create a new migration
-create-migration:
-	@read -p "Enter migration name: " name; \
-	$(MIGRATE) create -ext sql -dir $(MIGRATE_DIR) -seq $$name
-
-# Migrate up
-migrate-up:
-	@$(MIGRATE) -path $(MIGRATE_DIR) -database $(DB_URL) up
-
-# Migrate down
-migrate-down:
-	@$(MIGRATE) -path $(MIGRATE_DIR) -database $(DB_URL) down
-
-# Build the application
-all: build test
-templ-install:
-	@if ! command -v templ > /dev/null; then \
-		read -p "Go's 'templ' is not installed on your machine. Do you want to install it? [Y/n] " choice; \
-		if [ "$$choice" != "n" ] && [ "$$choice" != "N" ]; then \
-			go install github.com/a-h/templ/cmd/templ@latest; \
-			if [ ! -x "$$(command -v templ)" ]; then \
-				echo "templ installation failed. Exiting..."; \
-				exit 1; \
-			fi; \
-		else \
-			echo "You chose not to install templ. Exiting..."; \
-			exit 1; \
-		fi; \
-	fi
-tailwind:
-	@if [ ! -f tailwindcss ]; then curl -sL https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64 -o tailwindcss; fi
-	
-	@chmod +x tailwindcss
-
-build: tailwind templ-install
-	@echo "Building..."
-	@templ generate
-	@./tailwindcss -i cmd/web/assets/css/input.css -o cmd/web/assets/css/output.css
-	@go build -o main cmd/api/main.go
-
-# Run the application
-run:
-	@go run cmd/api/main.go
-# Create DB container
-docker-run:
-	@if docker compose up 2>/dev/null; then \
-		: ; \
-	else \
-		echo "Falling back to Docker Compose V1"; \
-		docker-compose up; \
-	fi
-
-# Shutdown DB container
-docker-down:
-	@if docker compose down 2>/dev/null; then \
-		: ; \
-	else \
-		echo "Falling back to Docker Compose V1"; \
-		docker-compose down; \
-	fi
-
-# Test the application
+## test: run all tests
+.PHONY: test
 test:
-	@echo "Testing..."
-	@go test ./... -v
-# Integrations Tests for the application
-itest:
-	@echo "Running integration tests..."
-	@go test ./internal/database -v
+	go test -v -race -buildvcs ./...
 
-# Clean the binary
-clean:
-	@echo "Cleaning..."
-	@rm -f main
+## test/cover: run all tests and display coverage
+.PHONY: test/cover
+test/cover:
+	go test -v -race -buildvcs -coverprofile=/tmp/coverage.out ./...
+	go tool cover -html=/tmp/coverage.out
 
-# Live Reload
-watch:
-	@if command -v air > /dev/null; then \
-            air; \
-            echo "Watching...";\
-        else \
-            read -p "Go's 'air' is not installed on your machine. Do you want to install it? [Y/n] " choice; \
-            if [ "$$choice" != "n" ] && [ "$$choice" != "N" ]; then \
-                go install github.com/air-verse/air@latest; \
-                air; \
-                echo "Watching...";\
-            else \
-                echo "You chose not to install air. Exiting..."; \
-                exit 1; \
-            fi; \
-        fi
+# ==================================================================================== #
+# DEVELOPMENT
+# ==================================================================================== #
 
-.PHONY: all build run test clean watch tailwind docker-run docker-down itest templ-install
+## tidy: tidy modfiles and format .go files
+.PHONY: tidy
+tidy:
+	go mod tidy -v
+	go fmt ./...
+
+## build: build the cmd/api application
+.PHONY: build
+build:
+	go build -o=/tmp/bin/api ./cmd/api
+	
+## run: run the cmd/api application
+.PHONY: run
+run: build
+	/tmp/bin/api
+
+## run/live: run the application with reloading on file changes
+.PHONY: run/live
+run/live:
+	go run github.com/cosmtrek/air@v1.43.0 \
+		--build.cmd "make build" --build.bin "/tmp/bin/api" --build.delay "100" \
+		--build.exclude_dir "web" \
+		--build.include_ext "go, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
+		--misc.clean_on_exit "true"
+
