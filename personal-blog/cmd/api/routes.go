@@ -1,10 +1,13 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
+	_ "github.com/swaggo/files"
+	httpSwagger "github.com/swaggo/http-swagger"
+	_ "github.com/swaggo/http-swagger/example/go-chi/docs"
+	"net/http"
+	"path/filepath"
 )
 
 func (app *application) routes() http.Handler {
@@ -36,6 +39,23 @@ func (app *application) routes() http.Handler {
 		w.WriteHeader(http.StatusOK)
 	})
 
+	// Add Swagger UI route
+	mux.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("/swagger/doc.json"), // The URL pointing to API definition
+		httpSwagger.UIConfig(map[string]string{
+			"displayRequestDuration":   "true",
+			"defaultModelsExpandDepth": "-1",
+			"deepLinking":              "true",
+			"displayOperationId":       "true",
+		}),
+	))
+
+	// Serve the swagger.yaml file
+	mux.Get("/swagger/doc.json", func(w http.ResponseWriter, r *http.Request) {
+		yamlFile := filepath.Join("cmd", "docs", "personal-blog.swagger.yaml")
+		http.ServeFile(w, r, yamlFile)
+	})
+
 	mux.Get("/status", app.status)
 
 	mux.Group(func(mux chi.Router) {
@@ -50,8 +70,10 @@ func (app *application) routes() http.Handler {
 		mux.Get("/articles", app.readArticles)
 		mux.Get("/article/{id:[1-9][0-9]*}", app.readArticleByID)
 
+		//docs
+
 		mux.Group(func(mux chi.Router) {
-			mux.Use(app.requireAuthSession) // Middleware to protect admin routes
+			mux.Use(app.requireAuthSession)
 
 			mux.Get("/admin", app.readArticlesAll)
 			mux.Get("/admin/article/{id:[1-9][0-9]*}", app.readArticleByIDAdmin)

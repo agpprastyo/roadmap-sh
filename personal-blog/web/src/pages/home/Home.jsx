@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import axios from 'axios';
 import Header from "../../components/Header.jsx";
 import ArticleCard from "../../components/ArticleCard.jsx";
@@ -14,14 +14,13 @@ const Home = () => {
     const [error, setError] = useState(null);
 
 
-
     const fetchArticles = useCallback(async () => {
         setIsLoading(true);
         setError(null);
         try {
             // Create dynamic params object based on sortBy
             const sortParams = {};
-            switch(sortBy) {
+            switch (sortBy) {
                 case 'title-asc':
                     sortParams.title_asc = true;
                     break;
@@ -99,7 +98,7 @@ const Home = () => {
                 )}
 
                 {!isLoading && !error && articles.length > 0 && (
-                    <>
+                    <div className='px-8'>
                         {articles.map(article => (
                             <ArticleCard
                                 key={article.id}
@@ -112,7 +111,7 @@ const Home = () => {
                             totalPages={totalPages}
                             onPageChange={setPage}
                         />
-                    </>
+                    </div>
                 )}
             </div>
         </div>

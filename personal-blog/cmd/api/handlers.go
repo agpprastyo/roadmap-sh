@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"golang.org/x/crypto/bcrypt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -215,7 +216,7 @@ func (app *application) readArticleByID(w http.ResponseWriter, r *http.Request) 
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		// If the conversion fails, return a 400 Bad Request error
-		http.Error(w, "Invalid article ID", http.StatusBadRequest)
+		app.badRequest(w, r, err)
 		return
 	}
 
@@ -467,4 +468,19 @@ func (app *application) restoreArticle(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		app.serverError(w, r, err)
 	}
+}
+
+// serveOpenAPIDocs handles the request to serve the OpenAPI documentation.
+func (app *application) serveOpenAPIDocs(w http.ResponseWriter, r *http.Request) {
+	// Read the OpenAPI JSON file
+	data, err := ioutil.ReadFile("../docs/personal-blog.openapi.json")
+	if err != nil {
+		http.Error(w, "Unable to read OpenAPI documentation", http.StatusInternalServerError)
+		return
+	}
+
+	// Set the Content-Type header to application/json
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
 }

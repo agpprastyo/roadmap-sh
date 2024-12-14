@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {useParams, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
 
 const Detail = () => {
-    const { id } = useParams();
-    const navigate = useNavigate(); // Add navigation hook
+    const {id} = useParams();
+    const navigate = useNavigate();
     const [article, setArticle] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -27,7 +27,6 @@ const Detail = () => {
         fetchArticleDetail();
     }, [id]);
 
-    // Format date
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -38,9 +37,8 @@ const Detail = () => {
         });
     };
 
-    // Handle back navigation
     const handleGoBack = () => {
-        navigate(-1); // Goes back to the previous page
+        navigate(-1);
     };
 
     // Render loading state
@@ -61,7 +59,7 @@ const Detail = () => {
                 </div>
                 <button
                     onClick={handleGoBack}
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
                 >
                     Go Back
                 </button>
@@ -71,12 +69,12 @@ const Detail = () => {
 
     // Render article details
     return (
-        <div className="max-w-6xl mx-auto  py-8">
+        <div className="max-w-4xl mx-auto py-8 px-4">
             {/* Back button */}
             <div className="mb-6">
                 <button
                     onClick={handleGoBack}
-                    className="flex items-center text-blue-600 hover:text-blue-800"
+                    className="flex items-center text-blue-600 hover:text-blue-800 transition"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -94,9 +92,9 @@ const Detail = () => {
                 </button>
             </div>
 
-            <article className="max-w-2xl mx-auto">
-                <header className="mb-6">
-                    <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+            <article className="bg-white shadow-lg rounded-lg overflow-hidden">
+                <header className="px-6 py-4 border-b">
+                    <h1 className="text-4xl font-bold text-gray-800 mb-2">{article.title}</h1>
                     <div className="text-gray-600 text-sm">
                         <span>Published: {formatDate(article.created_at)}</span>
                         {article.updated_at && (
@@ -108,7 +106,7 @@ const Detail = () => {
                 </header>
 
                 <div
-                    className="prose max-w-none"
+                    className="prose max-w-none px-6 py-4"
                     dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(article.content)
                     }}

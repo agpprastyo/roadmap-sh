@@ -1,0 +1,514 @@
+info:
+  title: Personal Blog
+  description: ''
+  version: 1.0.0
+tags: []
+paths:
+  /basic-auth-protected:
+    get:
+      summary: basic-auth-protected
+      deprecated: false
+      description: ''
+      tags: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties: {}
+        '401':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties:
+              Error:
+                type: string
+            required:
+              - Error
+      security:
+        - basic: []
+      consumes:
+        - application/json
+      produces:
+        - application/octet-stream
+        - application/json
+  /api/v1/articles:
+    get:
+      summary: Articles
+      deprecated: false
+      description: ''
+      tags: []
+      parameters:
+        - name: page
+          in: query
+          description: ''
+          required: true
+          type: string
+          x-example: '1'
+        - name: search
+          in: query
+          description: ''
+          required: true
+          type: string
+          x-example: example
+        - name: page_size
+          in: query
+          description: ''
+          required: true
+          type: string
+          x-example: '10'
+        - name: title_asc
+          in: query
+          description: ''
+          required: true
+          type: string
+          x-example: 'true'
+        - name: title_desc
+          in: query
+          description: ''
+          required: true
+          type: string
+          x-example: 'true'
+        - name: created_at_asc
+          in: query
+          description: ''
+          required: true
+          type: string
+          x-example: 'true'
+        - name: created_at_desc
+          in: query
+          description: ''
+          required: true
+          type: string
+          x-example: 'true'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties:
+              articles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    content:
+                      type: string
+                    published:
+                      type: boolean
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: 'null'
+                    delete_at:
+                      type: 'null'
+                  required:
+                    - id
+                    - title
+                    - content
+                    - published
+                    - created_at
+                    - updated_at
+                    - delete_at
+              next_url:
+                type: 'null'
+              page:
+                type: integer
+              page_size:
+                type: integer
+              search:
+                type: string
+              sort_by:
+                type: string
+              total:
+                type: integer
+            required:
+              - articles
+              - next_url
+              - page
+              - page_size
+              - search
+              - sort_by
+              - total
+      security: []
+      produces:
+        - application/json
+  /api/v1/admin:
+    get:
+      summary: Articles All | Admin
+      deprecated: false
+      description: ''
+      tags: []
+      parameters:
+        - name: page
+          in: query
+          description: ''
+          required: false
+          type: string
+          x-example: '1'
+        - name: search
+          in: query
+          description: ''
+          required: false
+          type: string
+          x-example: cobacoba
+        - name: page_size
+          in: query
+          description: ''
+          required: false
+          type: string
+          x-example: '10'
+        - name: sort_by
+          in: query
+          description: ''
+          required: false
+          type: string
+          x-example: title-asc
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties:
+              articles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    content:
+                      type: string
+                    published:
+                      type: boolean
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: 'null'
+                    delete_at:
+                      type: 'null'
+                  required:
+                    - id
+                    - title
+                    - content
+                    - published
+                    - created_at
+                    - updated_at
+                    - delete_at
+              next_url:
+                type: 'null'
+              page:
+                type: integer
+              page_size:
+                type: integer
+              sort_by:
+                type: string
+              total:
+                type: integer
+            required:
+              - articles
+              - next_url
+              - page
+              - page_size
+              - sort_by
+              - total
+      security: []
+      produces:
+        - application/json
+  /api/v1/delete/{id}:
+    delete:
+      summary: Delete Article | Admin
+      deprecated: false
+      description: ''
+      tags: []
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+              - message
+        '404':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties:
+              Error:
+                type: string
+            required:
+              - Error
+        '405':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties:
+              Error:
+                type: string
+            required:
+              - Error
+      security: []
+      produces:
+        - application/json
+  /api/v1/admin/article/{id}:
+    get:
+      summary: Article By ID | Admin
+      deprecated: false
+      description: ''
+      tags: []
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+              content:
+                type: string
+              published:
+                type: boolean
+              created_at:
+                type: string
+              updated_at:
+                type: string
+              delete_at:
+                type: 'null'
+            required:
+              - id
+              - title
+              - content
+              - published
+              - created_at
+              - updated_at
+              - delete_at
+      security: []
+      produces:
+        - application/json
+  /api/v1/create:
+    post:
+      summary: Create Article | Admin
+      deprecated: false
+      description: ''
+      tags: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              content:
+                type: string
+              published:
+                type: boolean
+            required:
+              - title
+              - content
+              - published
+      responses:
+        '201':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties: {}
+      security: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  /api/v1/sign-in:
+    post:
+      summary: sign-in
+      deprecated: false
+      description: ''
+      tags: []
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties: {}
+      security:
+        - basic: []
+      produces:
+        - application/json
+  /api/v1/sign-out:
+    post:
+      summary: sign-out
+      deprecated: false
+      description: ''
+      tags: []
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties: {}
+      security: []
+      produces:
+        - application/json
+  /api/v1/edit/{id}:
+    patch:
+      summary: Update Article | Admin
+      deprecated: false
+      description: ''
+      tags: []
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              content:
+                type: string
+              published:
+                type: boolean
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties: {}
+      security: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  /api/v1/restore/{id}:
+    post:
+      summary: Restore Article
+      deprecated: false
+      description: ''
+      tags: []
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties: {}
+      security: []
+      produces:
+        - application/json
+  /api/v1/article/{id}:
+    get:
+      summary: Article By ID
+      deprecated: false
+      description: ''
+      tags: []
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          type: integer
+          x-example: 9
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+              content:
+                type: string
+              published:
+                type: boolean
+              created_at:
+                type: string
+              updated_at:
+                type: 'null'
+              delete_at:
+                type: 'null'
+            required:
+              - id
+              - title
+              - content
+              - published
+              - created_at
+              - updated_at
+              - delete_at
+        '404':
+          description: ''
+          headers: {}
+          schema:
+            type: object
+            properties:
+              Error:
+                type: string
+            required:
+              - Error
+      security: []
+      produces:
+        - application/json
+swagger: '2.0'
+host: localhost:4444
+schemes:
+  - http
+basePath: /
+definitions: {}
+securityDefinitions:
+  basic:
+    type: basic
+x-components: {}
