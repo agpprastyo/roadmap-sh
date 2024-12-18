@@ -15,18 +15,18 @@ type User struct {
 	HashedPassword string    `db:"hashed_password" json:"hashedPassword"`
 }
 
-func (db *DB) InsertUser(email, hashedPassword string) (int, error) {
+func (db *DB) InsertUser(email, hashedPassword string, name string) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
 	defer cancel()
 
 	var id int
 
 	query := `
-		INSERT INTO users (created, email, hashed_password)
-		VALUES ($1, $2, $3)
+		INSERT INTO users (created, email, hashed_password, name)
+		VALUES ($1, $2, $3, $4)
 		RETURNING id`
 
-	err := db.GetContext(ctx, &id, query, time.Now(), email, hashedPassword)
+	err := db.GetContext(ctx, &id, query, time.Now(), email, hashedPassword, name)
 	if err != nil {
 		return 0, err
 	}

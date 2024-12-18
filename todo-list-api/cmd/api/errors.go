@@ -79,3 +79,8 @@ func (app *application) basicAuthenticationRequired(w http.ResponseWriter, r *ht
 	message := "You must be authenticated to access this resource"
 	app.errorMessage(w, r, http.StatusUnauthorized, message, headers)
 }
+
+// invalidRefreshToken
+func (app *application) invalidRefreshToken(w http.ResponseWriter, r *http.Request) {
+	app.errorMessage(w, r, http.StatusUnauthorized, "Invalid refresh token", nil)
+}

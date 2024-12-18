@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"sync"
 	"time"
 
 	"github.com/agpprastyo/todo-list-api/assets"
@@ -20,6 +21,7 @@ const defaultTimeout = 3 * time.Second
 
 type DB struct {
 	*sqlx.DB
+	mu sync.Mutex
 }
 
 func New(dsn string, automigrate bool) (*DB, error) {
@@ -62,5 +64,5 @@ func New(dsn string, automigrate bool) (*DB, error) {
 		}
 	}
 
-	return &DB{db}, nil
+	return &DB{DB: db}, nil
 }

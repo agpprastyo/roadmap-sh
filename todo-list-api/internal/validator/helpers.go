@@ -1,6 +1,8 @@
 package validator
 
 import (
+	"crypto/rand"
+	"encoding/hex"
 	"net/url"
 	"regexp"
 	"strings"
@@ -85,4 +87,13 @@ func IsURL(value string) bool {
 	}
 
 	return u.Scheme != "" && u.Host != ""
+
+}
+
+func GenerateSecureToken(length int) string {
+	b := make([]byte, length/2)
+	if _, err := rand.Read(b); err != nil {
+		panic(err)
+	}
+	return hex.EncodeToString(b)
 }
