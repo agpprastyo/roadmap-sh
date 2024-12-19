@@ -19,3 +19,5 @@ This repository contains projects submission for [Roadmap.sh](https://roadmap.sh
    Project submission for [Unit Converter](https://roadmap.sh/projects/unit-converter)
 6. [Personal Blog](./personal-blog) - A simple blog application.
    Project submission for [Personal Blog](https://roadmap.sh/projects/personal-blog)
+7. [Todo App](./todo-list-api) - A simple todo application.
+   Project submission for [Todo App](https://roadmap.sh/projects/todo-list-api)
